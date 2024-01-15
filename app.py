@@ -14,7 +14,7 @@ loadeed_model = pickle.load(open('lr_hearing_loss.sav', 'rb'))
 
 with st.sidebar:
     selected= om(menu_title='Main Menu',
-                 options = ['Home','Graphs','Project', 'Contribute'])
+                 options = ['Home','Graphs','Project'])
     
 if selected =='Home':
     st.title('Hearing Loss Web App')
@@ -99,30 +99,4 @@ if selected =='Project':
         
     if st.button('Submit'):
         diagnosis = test_result([age, physical_score])
-        st.success(diagnosis)
-    
-
-if selected =='Contribute':
-    st.header('Data Contribute')
-    age = st.number_input('Age', min_value=0, max_value=100, step = 1)
-    physical_score = st.number_input('Physical Score', min_value=00.00, max_value=100.00, step = 01.00)
-    
-    def test_result(input_data):
-        
-        input_data_np_asarray = np.asarray(input_data)
-        
-        input_data_reshape = input_data_np_asarray.reshape(1, -1)
-        
-        prediction = loadeed_model.predict(input_data_reshape)[0]
-        
-        return prediction
-            
-    diagnosis = ''
-        
-    if st.button('Submit'):
-        diagnosis = test_result([[age, physical_score]])
-        to_add = {'age':[age], 'physical_score':[physical_score],'test_result':[diagnosis]}
-        to_add = pd.DataFrame(to_add)
-        to_add.to_csv('data//hearing_test.csv', mode='a', header=False, index=False)
-        st.success('Success Add The Data')
-    
+        st.success(diagnosis) 
